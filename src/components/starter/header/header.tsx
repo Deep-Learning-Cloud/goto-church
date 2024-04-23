@@ -9,6 +9,7 @@ export default component$(() => {
         <div class={styles.logo}>
           <a href="/" title="qwik">
             <QwikLogo height={50} width={143} />
+            sus
           </a>
         </div>
         <ul>

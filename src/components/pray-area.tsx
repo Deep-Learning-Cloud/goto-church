@@ -1,4 +1,5 @@
 import { component$, useSignal } from "@builder.io/qwik";
+import { Button } from "./button";
 
 export const PrayArea = component$(() => {
   const showTextBox = useSignal(false);
@@ -10,9 +11,7 @@ export const PrayArea = component$(() => {
     <div class="flex flex-col items-center gap-4">
       {!showTextBox.value && (
         <>
-          <button class="rounded bg-purple px-7 py-4 text-center font-sans text-xl font-bold text-white">
-            Generate random quote
-          </button>
+          <Button>Generate random quote</Button>
           <span class="text-center font-sans text-xl font-bold text-purple">
             OR
           </span>

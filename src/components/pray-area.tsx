@@ -21,6 +21,18 @@ export const PrayArea = component$(() => {
     await nav(`/results/${id}`);
   });
 
+  const generateFromInput = $(async () => {
+    if (!textAreaValue.value) return;
+
+    const id = nanoid(10);
+    await saveGenerateRequest({
+      id,
+      createdAt: new Date().toISOString(),
+      input: { type: "input", value: textAreaValue.value },
+    });
+    await nav(`/results/${id}`);
+  });
+
   return (
     <div class="flex flex-col items-center gap-4">
       {!showTextBox.value && (
@@ -72,7 +84,10 @@ export const PrayArea = component$(() => {
       </div>
 
       {showTextBox.value && (
-        <button class="rounded bg-purple px-7 py-4 text-center font-sans text-xl font-bold text-white">
+        <button
+          class="rounded bg-purple px-7 py-4 text-center font-sans text-xl font-bold text-white"
+          onClick$={generateFromInput}
+        >
           Generate quote
         </button>
       )}

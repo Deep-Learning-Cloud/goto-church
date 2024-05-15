@@ -1,7 +1,9 @@
-type GenerateRequest = {
+export type GenerateRequest = {
   id: string;
   createdAt: string;
-  input?: string;
+  input?:
+    | { type: "input"; value: string }
+    | { type: "regenerate"; original: string };
   results?: string[];
 };
 

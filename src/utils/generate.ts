@@ -1,9 +1,10 @@
 import OpenAI from "openai";
 import { exists } from "./exists";
 
-const instructions = `The message should fit on a sign, approximately 15-30 words. Your output should ONLY be the message, nothing else.`;
+const instructions = `The message follow the instructions given from the user input and should fit on a sign, approximately 15-30 words. Your output should ONLY be the message, nothing else.`;
 const defaultSystemPrompt = `You are a church sign generator. Create a single message for a church sign. ${instructions}`;
 const variantionSystemPrompt = `You are a church sign generator. Create variations of the message you receive. ${instructions}`;
+const randomUserPrompt = `Do not referencing any dates, holidays, time or days of the week.`;
 
 export class ChurchSignGenerator {
   private openai: OpenAI;
@@ -46,14 +47,12 @@ export class ChurchSignGenerator {
   }: { input?: string; systemPrompt?: string } = {}) {
     const userMessage = input
       ? { role: "user" as const, content: input }
-      : undefined;
+      : { role: "user" as const, content: randomUserPrompt };
 
+    console.log([{ role: "system", content: systemPrompt }, userMessage]);
     const response = await this.openai.chat.completions.create({
       model: "gpt-4o",
-      messages: [
-        { role: "system", content: systemPrompt },
-        ...[userMessage].filter(exists),
-      ],
+      messages: [{ role: "system", content: systemPrompt }, userMessage],
       max_tokens: 100,
       n: 3,
     });

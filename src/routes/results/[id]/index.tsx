@@ -47,6 +47,9 @@ export default component$(() => {
     const result = await fetch("/api/generate", {
       method: "POST",
       body: body != null ? JSON.stringify(body) : undefined,
+      headers: {
+        "Content-Type": "application/json",
+      },
     }).then((res) => res.json());
 
     req.results = result;

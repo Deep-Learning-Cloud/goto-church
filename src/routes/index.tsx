@@ -1,10 +1,14 @@
-import { component$, useVisibleTask$ } from "@builder.io/qwik";
+import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Quote } from "~/components/quote";
 import { PrayArea } from "~/components/pray-area";
 import { Header } from "~/components/header";
+import { getGenerateRequests } from "~/utils/store";
+import { exists } from "~/utils/exists";
 
 export default component$(() => {
+  const previousQuotes = useSignal<string[]>([]);
+
   useVisibleTask$(() => {
     const script = document.createElement("script");
     script.src = "https://www.paypalobjects.com/donate/sdk/donate-sdk.js";
@@ -22,6 +26,15 @@ export default component$(() => {
     });
     document.head.appendChild(script);
   });
+
+  useVisibleTask$(async () => {
+    const requests = await getGenerateRequests();
+    previousQuotes.value = requests
+      .flatMap((r) => r.results)
+      .filter(exists)
+      .toReversed();
+  });
+
   return (
     <div class="flex flex-col items-center gap-16 p-16">
       <Header />
@@ -39,27 +52,16 @@ export default component$(() => {
       <PrayArea />
 
       <div class="flex max-w-4xl flex-wrap justify-stretch gap-10 [&>*]:min-w-[200px] [&>*]:flex-auto [&>*]:basis-[25%]">
-        <Quote>
-          Kindness is a language that the deaf can hear and the blind can see.
-          Join us to spread love. Services on Sunday at 10:00 AM.
-        </Quote>
-
-        <Quote>
-          Give us a visit, we’re open between ‘just dropped the kids off at
-          school’ and ‘time to start dinner’. God doesn’t mind the timeline!
-        </Quote>
-
-        <Quote>
-          WiFi inside may not be as strong as in the coffee shop, but we promise
-          the connection is better. Youth Group, Tuesdays at 7 PM!
-        </Quote>
+        {previousQuotes.value.map((quote, index) => (
+          <Quote key={index}>{quote}</Quote>
+        ))}
       </div>
 
       <div class="flex flex-wrap justify-center gap-9 self-center">
-          <div id="donate-button-container">
-            <div id="donate-button" class="h-[54px] w-[151px]" />
-          </div>
+        <div id="donate-button-container">
+          <div id="donate-button" class="h-[54px] w-[151px]" />
         </div>
+      </div>
     </div>
   );
 });

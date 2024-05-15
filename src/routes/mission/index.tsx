@@ -94,7 +94,7 @@ export default component$(() => {
             <strong>Blessings,</strong>
           </p>
           <p>
-            <strong>Goto Church</strong>
+            <strong>Church AI</strong>
           </p>
         </div>
       </div>

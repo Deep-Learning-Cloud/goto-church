@@ -68,9 +68,12 @@ export default component$(() => {
 
   if (!results.value) {
     return (
-      <div class="flex w-full flex-col items-center gap-8 p-12 font-serif text-xl font-bold text-purple">
-        Getting your quotes, hang on a moment...
-        <span class="loader" />
+      <div class="flex flex-col items-center gap-16 p-16">
+        <Header />
+        <div class="flex w-full flex-col items-center gap-8 p-12 font-serif text-xl font-bold text-purple">
+          Getting your quotes, hang on a moment...
+          <span class="loader" />
+        </div>
       </div>
     );
   }
@@ -80,25 +83,6 @@ export default component$(() => {
       <Header />
       <div class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple">
         <h1 class="text-5xl leading-snug">Here are your quotes</h1>
-        <div class="max-w-xl text-xl">
-          <Link href="/">
-            <Button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="h-6 w-6"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Go back
-            </Button>
-          </Link>
-        </div>
         {generateRequest.value?.input?.type === "input" && (
           <p class="text-center font-sans text-xl text-purple">
             What's happening: {generateRequest.value.input.value}

@@ -1,9 +1,26 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Quote } from "~/components/quote";
 import { PrayArea } from "~/components/pray-area";
 
 export default component$(() => {
+  useVisibleTask$(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.paypalobjects.com/donate/sdk/donate-sdk.js";
+    script.charset = "UTF-8";
+    script.addEventListener("load", () => {
+      (window as any).PayPal.Donation.Button({
+        env: "production",
+        hosted_button_id: "577DU7SKN8S7E",
+        image: {
+          src: "https://pics.paypal.com/00/s/MmJlMjE3YjItMjkwYS00MTBmLWIyNzItYmVhMmRjOTYxNjkw/file.PNG",
+          alt: "Donate with PayPal button",
+          title: "PayPal - The safer, easier way to pay online!",
+        },
+      }).render("#donate-button");
+    });
+    document.head.appendChild(script);
+  });
   return (
     <div class="flex flex-col items-center gap-16 p-16">
       <div class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple">
@@ -34,6 +51,12 @@ export default component$(() => {
           the connection is better. Youth Group, Tuesdays at 7 PM!
         </Quote>
       </div>
+
+      <div class="flex flex-wrap justify-center gap-9 self-center">
+          <div id="donate-button-container">
+            <div id="donate-button" class="h-[54px] w-[151px]" />
+          </div>
+        </div>
     </div>
   );
 });

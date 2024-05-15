@@ -1,4 +1,3 @@
-import { Link } from "@builder.io/qwik-city";
 import { Button } from "../../components/button";
 import { PageLayout } from "~/components/page-layout";
 import { component$ } from "@builder.io/qwik";
@@ -67,7 +66,7 @@ export default component$(() => {
           <p>
             <strong>How Your Contribution Helps:</strong>
           </p>
-          <ul class="text-start list-disc list-inside">
+          <ul class="list-inside list-disc text-start">
             <li>
               <strong>Server Costs:</strong> Keeping our website online 24/7 so
               it's always available when you need it.

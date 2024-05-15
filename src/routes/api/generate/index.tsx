@@ -1,7 +1,11 @@
 import { type RequestHandler } from "@builder.io/qwik-city";
 import { ChurchSignGenerator } from "~/utils/generate";
 
+const minimumRequestTime = 5000;
+
 export const onPost: RequestHandler = async ({ json, env, parseBody }) => {
+  const now = new Date();
+
   const body = (await parseBody()) as
     | { text: string }
     | { regenerate: string }
@@ -39,6 +43,13 @@ export const onPost: RequestHandler = async ({ json, env, parseBody }) => {
   } else {
     json(400, { error: "Invalid request" });
     return;
+  }
+
+  const elapsed = new Date().getTime() - now.getTime();
+  if (elapsed < minimumRequestTime) {
+    await new Promise((resolve) =>
+      setTimeout(resolve, minimumRequestTime - elapsed),
+    );
   }
 
   json(200, texts);

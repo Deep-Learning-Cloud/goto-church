@@ -107,6 +107,9 @@ export default component$(() => {
             Original text: {generateRequest.value.input.original}
           </p>
         )}
+        {generateRequest.value && generateRequest.value.input == null && (
+          <p class="text-center font-sans text-xl text-purple">Random quote</p>
+        )}
       </div>
 
       <div class="flex max-w-4xl flex-col flex-wrap justify-stretch gap-10 [&>*]:min-w-[200px] [&>*]:flex-auto [&>*]:basis-[25%]">

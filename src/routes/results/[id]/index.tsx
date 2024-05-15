@@ -6,6 +6,7 @@ import type { GenerateRequest } from "~/utils/store";
 import { getGenerateRequest, saveGenerateRequest } from "~/utils/store";
 import "./loader.css";
 import { nanoid } from "nanoid";
+import { Header } from "~/components/header";
 
 // We have a new support group for people with mental health issues, meetings on Saturdays at 1 pm
 
@@ -76,6 +77,7 @@ export default component$(() => {
 
   return (
     <div class="flex flex-col items-center gap-16 p-16">
+      <Header />
       <div class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple">
         <h1 class="text-5xl leading-snug">Here are your quotes</h1>
         <div class="max-w-xl text-xl">

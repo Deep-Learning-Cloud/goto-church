@@ -2,6 +2,7 @@ import { component$, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Quote } from "~/components/quote";
 import { PrayArea } from "~/components/pray-area";
+import { Header } from "~/components/header";
 
 export default component$(() => {
   useVisibleTask$(() => {
@@ -23,6 +24,8 @@ export default component$(() => {
   });
   return (
     <div class="flex flex-col items-center gap-16 p-16">
+      <Header />
+
       <div class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple">
         <h1 class="text-5xl leading-snug">
           Inspirational quotes for your community

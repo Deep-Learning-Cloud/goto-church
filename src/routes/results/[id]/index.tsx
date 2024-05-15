@@ -18,7 +18,6 @@ export default component$(() => {
 
   useVisibleTask$(async ({ track }) => {
     track(() => loc.params.id);
-    console.log("ran", loc.params);
 
     results.value = undefined;
     generateRequest.value = undefined;

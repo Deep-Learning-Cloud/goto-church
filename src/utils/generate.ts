@@ -42,7 +42,7 @@ export class ChurchSignGenerator {
       : undefined;
 
     const response = await this.openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-4o",
       messages: [
         { role: "system", content: "You are a church sign generator" },
         ...[userMessage].filter(exists),

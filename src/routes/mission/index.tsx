@@ -37,7 +37,7 @@ export default component$(() => {
           going and make a lasting impact on the hearts and minds of our
           community members.
         </p>
-        
+
         <div class="flex flex-wrap justify-center gap-9 self-center">
           <div id="donate-button-container">
             <div id="donate-button" class="h-[54px] w-[151px]" />

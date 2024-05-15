@@ -85,7 +85,7 @@ export default component$(() => {
 
         <div class="flex flex-col gap-1">
           <p>
-            <stong>With gratitude and hope,</stong>
+            <strong>With gratitude and hope,</strong>
           </p>
           <p>
             <strong>Church AI</strong>

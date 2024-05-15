@@ -60,7 +60,7 @@ export class ChurchSignGenerator {
 
     return response.choices
       .map((choice) => {
-        return choice.message.content?.replace(/^"(.*)"$/, "$1");
+        return choice.message.content?.replace(/^["“](.*)["”]$/, "$1");
       })
       .filter(exists);
   }

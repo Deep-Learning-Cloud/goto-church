@@ -1,5 +1,8 @@
-import { component$, useSignal } from "@builder.io/qwik";
+import { component$, useSignal, $ } from "@builder.io/qwik";
 import { Button } from "./button";
+import { nanoid } from "nanoid";
+import { saveGenerateRequest } from "~/utils/store";
+import { useNavigate } from "@builder.io/qwik-city";
 
 export const PrayArea = component$(() => {
   const showTextBox = useSignal(false);
@@ -7,11 +10,34 @@ export const PrayArea = component$(() => {
   const textArea = useSignal<HTMLTextAreaElement>();
   const textAreaValue = useSignal<string>();
 
+  const nav = useNavigate();
+
+  const generateRandom = $(async () => {
+    const id = nanoid(10);
+    await saveGenerateRequest({
+      id,
+      createdAt: new Date().toISOString(),
+    });
+    await nav(`/results/${id}`);
+  });
+
+  const generateFromInput = $(async () => {
+    if (!textAreaValue.value) return;
+
+    const id = nanoid(10);
+    await saveGenerateRequest({
+      id,
+      createdAt: new Date().toISOString(),
+      input: { type: "input", value: textAreaValue.value },
+    });
+    await nav(`/results/${id}`);
+  });
+
   return (
     <div class="flex flex-col items-center gap-4">
       {!showTextBox.value && (
         <>
-          <Button>Generate random quote</Button>
+          <Button onClick$={generateRandom}>Generate random quote</Button>
           <span class="text-center font-sans text-xl font-bold text-purple">
             OR
           </span>
@@ -58,7 +84,10 @@ export const PrayArea = component$(() => {
       </div>
 
       {showTextBox.value && (
-        <button class="rounded bg-purple px-7 py-4 text-center font-sans text-xl font-bold text-white">
+        <button
+          class="rounded bg-purple px-7 py-4 text-center font-sans text-xl font-bold text-white"
+          onClick$={generateFromInput}
+        >
           Generate quote
         </button>
       )}

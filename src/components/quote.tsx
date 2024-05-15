@@ -4,7 +4,7 @@ export const Quote = component$(({ class: c }: { class?: string }) => {
   return (
     <div
       class={[
-        "relative rounded border border-purple/10 bg-white px-10 py-5",
+        "relative flex flex-col gap-5 rounded border border-purple/10 bg-white px-10 py-5",
         c,
       ]}
     >
@@ -14,6 +14,9 @@ export const Quote = component$(({ class: c }: { class?: string }) => {
       <p class="font-serif text-xl text-purple">
         <Slot />
       </p>
+      <div class="flex gap-2.5 empty:hidden">
+        <Slot name="actions" />
+      </div>
     </div>
   );
 });

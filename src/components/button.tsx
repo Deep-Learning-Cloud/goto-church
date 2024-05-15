@@ -1,3 +1,4 @@
+import type { QwikIntrinsicElements } from "@builder.io/qwik";
 import { Slot, component$ } from "@builder.io/qwik";
 
 type ButtonVariant = "primary" | "secondary";
@@ -9,11 +10,12 @@ export const Button = component$(
     variant = "primary",
     size = "md",
     color = "primary",
+    ...props
   }: {
     variant?: ButtonVariant;
     size?: ButtonSize;
     color?: ButtonColor;
-  }) => {
+  } & QwikIntrinsicElements["button"]) => {
     return (
       <button
         class={[
@@ -31,6 +33,7 @@ export const Button = component$(
             "px-4 py-2.5 text-base": size === "sm",
           },
         ]}
+        {...props}
       >
         <Slot />
       </button>

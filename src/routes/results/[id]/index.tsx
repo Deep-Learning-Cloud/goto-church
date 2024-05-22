@@ -51,9 +51,12 @@ export default component$(() => {
       result = await fetch("/api/generate", {
         method: "POST",
         body: body != null ? JSON.stringify(body) : undefined,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers:
+          body != null
+            ? {
+                "Content-Type": "application/json",
+              }
+            : undefined,
       }).then((res) => res.json());
       if (result.error) {
         throw new Error(result.error);

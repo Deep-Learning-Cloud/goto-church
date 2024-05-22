@@ -2,9 +2,9 @@ import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { Quote } from "~/components/quote";
 import { PrayArea } from "~/components/pray-area";
-import { Header } from "~/components/header";
 import { getGenerateRequests } from "~/utils/store";
 import { exists } from "~/utils/exists";
+import { PageLayout } from "~/components/page-layout";
 
 export default component$(() => {
   const previousQuotes = useSignal<string[]>([]);
@@ -36,10 +36,11 @@ export default component$(() => {
   });
 
   return (
-    <div class="flex flex-col items-center gap-16 p-16">
-      <Header />
-
-      <div class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple">
+    <PageLayout>
+      <div
+        class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple"
+        q:slot="head"
+      >
         <h1 class="text-5xl leading-snug">
           Inspirational quotes for your community
         </h1>
@@ -62,7 +63,7 @@ export default component$(() => {
           <div id="donate-button" class="h-[54px] w-[151px]" />
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 });
 

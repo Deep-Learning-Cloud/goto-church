@@ -12,7 +12,11 @@
   width: 48px;
   height: 48px;
   background-color: #fff;
-  background-image: radial-gradient(circle 14px, #0d161b 100%, transparent 0);
+  background-image: radial-gradient(
+    circle 14px,
+    #0d161b 99.9999%,
+    transparent 0
+  );
   background-repeat: no-repeat;
   border-radius: 50%;
   animation:

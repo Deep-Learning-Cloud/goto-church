@@ -1,5 +1,5 @@
 import { $, component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
-import { Link, useLocation, useNavigate } from "@builder.io/qwik-city";
+import { useLocation, useNavigate } from "@builder.io/qwik-city";
 import { Button } from "~/components/button";
 import { Quote } from "~/components/quote";
 import type { GenerateRequest } from "~/utils/store";
@@ -16,6 +16,7 @@ export default component$(() => {
 
   const generateRequest = useSignal<GenerateRequest>();
   const results = useSignal<string[]>();
+  const error = useSignal<string>();
 
   useVisibleTask$(async ({ track }) => {
     track(() => loc.params.id);
@@ -45,13 +46,25 @@ export default component$(() => {
       }
     }
 
-    const result = await fetch("/api/generate", {
-      method: "POST",
-      body: body != null ? JSON.stringify(body) : undefined,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
+    let result;
+    try {
+      result = await fetch("/api/generate", {
+        method: "POST",
+        body: body != null ? JSON.stringify(body) : undefined,
+        headers:
+          body != null
+            ? {
+                "Content-Type": "application/json",
+              }
+            : undefined,
+      }).then((res) => res.json());
+      if (result.error) {
+        throw new Error(result.error);
+      }
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : String(e);
+      return;
+    }
 
     req.results = result;
     results.value = result;
@@ -68,6 +81,20 @@ export default component$(() => {
     });
     await nav(`/results/${id}`);
   });
+
+  if (error.value) {
+    return (
+      <div class="flex flex-col items-center gap-16 p-16">
+        <Header />
+        <div class="flex w-full flex-col items-center gap-8 p-12 text-center font-serif text-xl font-bold text-purple">
+          <h2 class="text-center font-serif text-4xl leading-snug">
+            An error occurred
+          </h2>
+          {error.value}
+        </div>
+      </div>
+    );
+  }
 
   if (!results.value) {
     return (

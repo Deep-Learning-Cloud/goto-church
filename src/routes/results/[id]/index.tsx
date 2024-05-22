@@ -6,7 +6,7 @@ import type { GenerateRequest } from "~/utils/store";
 import { getGenerateRequest, saveGenerateRequest } from "~/utils/store";
 import "./loader.css";
 import { nanoid } from "nanoid";
-import { Header } from "~/components/header";
+import { PageLayout } from "~/components/page-layout";
 
 // We have a new support group for people with mental health issues, meetings on Saturdays at 1 pm
 
@@ -84,34 +84,34 @@ export default component$(() => {
 
   if (error.value) {
     return (
-      <div class="flex flex-col items-center gap-16 p-16">
-        <Header />
-        <div class="flex w-full flex-col items-center gap-8 p-12 text-center font-serif text-xl font-bold text-purple">
-          <h2 class="text-center font-serif text-4xl leading-snug">
-            An error occurred
-          </h2>
-          {error.value}
-        </div>
-      </div>
+      <PageLayout>
+        <h2 class="text-center font-serif text-4xl leading-snug" q:slot="head">
+          An error occurred
+        </h2>
+        {error.value}
+      </PageLayout>
     );
   }
 
   if (!results.value) {
     return (
-      <div class="flex flex-col items-center gap-16 p-16">
-        <Header />
-        <div class="flex w-full flex-col items-center gap-8 p-12 font-serif text-xl font-bold text-purple">
+      <PageLayout>
+        <h2 q:slot="head" class="font-serif text-xl font-bold text-purple">
           Getting your quotes, hang on a moment...
+        </h2>
+        <div class="flex w-full flex-col items-center gap-8 p-12">
           <span class="loader" />
         </div>
-      </div>
+      </PageLayout>
     );
   }
 
   return (
-    <div class="flex flex-col items-center gap-16 p-16">
-      <Header />
-      <div class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple">
+    <PageLayout>
+      <div
+        class="flex w-full max-w-3xl flex-col items-center gap-6 text-center font-serif font-bold text-purple"
+        q:slot="head"
+      >
         <h1 class="text-5xl leading-snug">Here are your quotes</h1>
         {generateRequest.value?.input?.type === "input" && (
           <p class="text-center font-sans text-xl text-purple">
@@ -146,6 +146,6 @@ export default component$(() => {
           </Quote>
         ))}
       </div>
-    </div>
+    </PageLayout>
   );
 });
